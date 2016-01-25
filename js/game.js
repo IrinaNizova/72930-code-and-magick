@@ -378,18 +378,87 @@
      * Отрисовка экрана паузы.
      */
     _drawPauseScreen: function() {
+      /**
+       *  Рисует параллелорамм
+       */
+      function _drawPolynom(ctx, beginSpotX, beginSpotY, numberLines, sizeX){
+        ctx.beginPath();
+        // Высота одной строки 30, и 30 на отступы
+        var hight = 30 + 30 * numberLines;
+        ctx.moveTo(beginSpotX, beginSpotY);
+        ctx.lineTo(beginSpotX+20, beginSpotY-hight);
+        ctx.lineTo(sizeX+beginSpotX+20, beginSpotY-hight);
+        ctx.lineTo(sizeX+beginSpotX, beginSpotY);
+        ctx.lineTo(beginSpotX, beginSpotY);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      /**
+       *  Разбивает текст на строки
+       */
+      function _splitText(text){
+        var words = text.split(" ");
+        var countWords = words.length;
+        var line = "";
+        var lines = [];
+        for (var n = 0; n < countWords; n++) {
+          if ((line + " " + words[n]).length > 20) {
+            // Записываем строку, если с новым словом она превышает 20 символов
+            lines.push(line);
+            line = words[n];
+          } else {
+            line = line + " " +words[n];
+          }
+          if (n == countWords-1) {
+            // Или записываем строку если слова закончились
+            lines.push(line);
+          }
+        }
+        return lines;
+      }
+
+      /**
+       *  Соединяет фигуры и текст
+       */
+      function _drawPolynomAndText(ctx, text) {
+        var lines = _splitText(text);
+        var maxline = 0;
+        for (var n = 0; n < lines.length; n++){ // Ищем самую длинную строчку
+          if (lines[n].length > maxline){
+            maxline = lines[n].length;
+          }
+        }
+        // Длинную по X вычисляем в зависимости от самой длинной строчки текста
+        var sizeX = 40 + 13 * maxline;
+
+        //Рисуем чёрную фигуру
+        ctx.fillStyle ="rgba(0, 0, 0, 0.7)";
+        _drawPolynom(ctx, 300, 210, lines.length, sizeX);
+
+        //Рисуем белую фигуру
+        ctx.fillStyle = "rgb(255,255,255)";
+        _drawPolynom(ctx, 290, 200, lines.length, sizeX);
+
+        //Пишем текст
+        ctx.strokeStyle = "#00F";
+        ctx.font = "16pt PT Mono";
+        for (var n = 0; n < lines.length; n++){
+          ctx.strokeText(lines[n], 310, 180-30*(lines.length-n-1));
+        }
+      }
       switch (this.state.currentStatus) {
         case Verdict.WIN:
-          console.log('you have won!');
+          _drawPolynomAndText(this.ctx, 'Вы выиграли. Поздравляю');
           break;
         case Verdict.FAIL:
-          console.log('you have failed!');
+          _drawPolynomAndText(this.ctx, 'Увы, вы проиграли');
           break;
         case Verdict.PAUSE:
-          console.log('game is on pause!');
+          _drawPolynomAndText(this.ctx, 'Игра на паузе. Нажмите пробел чтобы продолжить.');
           break;
         case Verdict.INTRO:
-          console.log('welcome to the game! Press Space to start');
+          _drawPolynomAndText(this.ctx, 'Если нажать вверх - я взлечу. Если нажать shift - кину файербол');
           break;
       }
     },
