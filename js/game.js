@@ -384,11 +384,11 @@
       function _drawPolynom(ctx, beginSpotX, beginSpotY, numberLines, sizeX){
         ctx.beginPath();
         // Высота одной строки 30, и 30 на отступы
-        var hight = 30 + 30 * numberLines;
+        var height = 30 + 30 * numberLines;
         ctx.moveTo(beginSpotX, beginSpotY);
-        ctx.lineTo(beginSpotX+20, beginSpotY-hight);
-        ctx.lineTo(sizeX+beginSpotX+20, beginSpotY-hight);
-        ctx.lineTo(sizeX+beginSpotX, beginSpotY);
+        ctx.lineTo(beginSpotX + 20, beginSpotY - height);
+        ctx.lineTo(sizeX + beginSpotX + 20, beginSpotY - height);
+        ctx.lineTo(sizeX + beginSpotX, beginSpotY);
         ctx.lineTo(beginSpotX, beginSpotY);
         ctx.closePath();
         ctx.fill();
@@ -397,8 +397,8 @@
       /**
        *  Разбивает текст на строки
        */
-      function _splitText(text){
-        var words = text.split(" ");
+      function _splitText(text) {
+        var words = text.split(' ');
         var countWords = words.length;
         var line = "";
         var lines = [];
@@ -410,7 +410,7 @@
           } else {
             line = line + " " +words[n];
           }
-          if (n == countWords-1) {
+          if (n === countWords-1) {
             // Или записываем строку если слова закончились
             lines.push(line);
           }
@@ -424,7 +424,7 @@
       function _drawPolynomAndText(ctx, text) {
         var lines = _splitText(text);
         var maxline = 0;
-        for (var n = 0; n < lines.length; n++){ // Ищем самую длинную строчку
+        for (n = 0; n < lines.length; n++){ // Ищем самую длинную строчку
           if (lines[n].length > maxline){
             maxline = lines[n].length;
           }
@@ -433,18 +433,18 @@
         var sizeX = 40 + 13 * maxline;
 
         //Рисуем чёрную фигуру
-        ctx.fillStyle ="rgba(0, 0, 0, 0.7)";
+        ctx.fillStyle ='rgba(0, 0, 0, 0.7)';
         _drawPolynom(ctx, 300, 210, lines.length, sizeX);
 
         //Рисуем белую фигуру
-        ctx.fillStyle = "rgb(255,255,255)";
+        ctx.fillStyle = 'rgb(255,255,255)';
         _drawPolynom(ctx, 290, 200, lines.length, sizeX);
 
         //Пишем текст
-        ctx.strokeStyle = "#00F";
-        ctx.font = "16pt PT Mono";
-        for (var n = 0; n < lines.length; n++){
-          ctx.strokeText(lines[n], 310, 180-30*(lines.length-n-1));
+        ctx.strokeStyle = '#00F';
+        ctx.font = '16pt PT Mono';
+        for (var n = 0; n < lines.length; n++) {
+          ctx.strokeText(lines[n], 310, 180 - 30 * (lines.length - n - 1));
         }
       }
       switch (this.state.currentStatus) {
