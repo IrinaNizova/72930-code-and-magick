@@ -441,12 +441,13 @@
         _drawPolynom(ctx, 290, 200, lines.length, sizeX);
 
         //Пишем текст
-        ctx.strokeStyle = '#00F';
+        ctx.fillStyle = '#00F';
         ctx.font = '16pt PT Mono';
         for (var n = 0; n < lines.length; n++) {
-          ctx.strokeText(lines[n], 310, 180 - 30 * (lines.length - n - 1));
+          ctx.fillText(lines[n], 310, 180 - 30 * (lines.length - n - 1));
         }
       }
+
       switch (this.state.currentStatus) {
         case Verdict.WIN:
           _drawPolynomAndText(this.ctx, 'Вы выиграли. Поздравляю');
