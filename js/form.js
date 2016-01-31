@@ -2,7 +2,7 @@
 
 (function() {
   var formContainer = document.querySelector('.overlay-container');
-  var form = document.forms[1];
+  var form = document.querySelector('.overlay');
   var formOpenButton = document.querySelector('.reviews-controls-new');
   var formCloseButton = document.querySelector('.review-form-close');
 
@@ -16,23 +16,6 @@
   var textLabel = document.querySelector('.review-fields-text');
 
 
-  onload = function() {
-    name.value = docCookies.getItem('name');
-    marks[docCookies.getItem('mark')-1].setAttribute('checked', true);
-  }
-
-  function getCookieDate() {
-    var date = new Date();
-    var birthday = new Date(date.getFullYear(), 10, 12);
-    if (date < birthday) {
-      birthday.setFullYear(date.getFullYear()-1);
-    }
-    var dt = date - birthday;
-    date.setDate(Math.round(dt/24/60/60/1000));
-    return date;
-  }
-
-
   formOpenButton.onclick = function(evt) {
     evt.preventDefault();
     formContainer.classList.remove('invisible');
@@ -42,9 +25,6 @@
   formCloseButton.onclick = function(evt) {
     evt.preventDefault();
     formContainer.classList.add('invisible');
-    var dateToExpire = getCookieDate();
-    docCookies.setItem('name', name.value, dateToExpire);
-    docCookies.setItem('mark', getMark(), dateToExpire);
   };
 
 
