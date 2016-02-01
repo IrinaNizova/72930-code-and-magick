@@ -1,4 +1,5 @@
 'use strict';
+/*  global docCookies: true  */
 
 (function() {
   var formContainer = document.querySelector('.overlay-container');
@@ -15,26 +16,40 @@
   var nameLabel = document.querySelector('.review-fields-name');
   var textLabel = document.querySelector('.review-fields-text');
 
-  onload = function() {
-    checkFormFields();
-  }
 
   formOpenButton.onclick = function(evt) {
     evt.preventDefault();
     formContainer.classList.remove('invisible');
+    marks[docCookies.getItem('mark') - 1].setAttribute('checked', true);
+    checkFormFields();
   };
 
   formCloseButton.onclick = function(evt) {
     evt.preventDefault();
+    var dateToExpire = getCookieDate();
+    docCookies.setItem('name', name.value, dateToExpire);
+    docCookies.setItem('mark', getMark(), dateToExpire);
     formContainer.classList.add('invisible');
   };
 
   function getMark() {
-    for (var i = 0; i < 5; i++){
+    for (var i = 0; i < 5; i++) {
       if (marks[i].checked === true) {
-        return i+1;
-	  }
-	}
+        return i + 1;
+      }
+    }
+  }
+
+
+  function getCookieDate() {
+    var date = new Date();
+    var birthday = new Date(date.getFullYear(), 10, 12);
+    if (date < birthday) {
+      birthday.setFullYear(date.getFullYear() - 1);
+    }
+    var dt = date - birthday;
+    date.setDate(Math.round(dt / 24 / 60 / 60 / 1000));
+    return date;
   }
 
 
@@ -46,12 +61,14 @@
     }
 
     textLabel.classList.add('invisible');
-      var mark = getMark();
-      if (mark < 3) {
-        if (textLabel.control.value === '') {
-          textLabel.classList.remove('invisible');
-        }
+
+    var mark = getMark();
+    if (mark < 3) {
+      if (textLabel.control.value === '') {
+        textLabel.classList.remove('invisible');
       }
+    }
+
 
     if (textLabel.classList.contains('invisible') && nameLabel.classList.contains('invisible')) {
       labelsContainer.classList.add('invisible');
@@ -65,8 +82,8 @@
   for (var i = 0; i < 5; i++) {
     marks[i].onchange = function() {
       checkFormFields();
-      }
-    }
+    };
+  }
 
   name.onchange = function() {
     checkFormFields();
