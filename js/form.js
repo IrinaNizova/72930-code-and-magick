@@ -19,13 +19,28 @@
   formOpenButton.onclick = function(evt) {
     evt.preventDefault();
     formContainer.classList.remove('invisible');
+    marks[docCookies.getItem('mark') - 1].setAttribute('checked', true);
     checkFormFields();
   };
 
   formCloseButton.onclick = function(evt) {
     evt.preventDefault();
     formContainer.classList.add('invisible');
+    var dateToExpire = getCookieDate();
+    docCookies.setItem('name', name.value, dateToExpire);
+    docCookies.setItem('mark', getMark(), dateToExpire);
   };
+
+  function getCookieDate() {
+    var date = new Date();
+    var birthday = new Date(date.getFullYear(), 10, 12);
+    if (date < birthday) {
+      birthday.setFullYear(date.getFullYear() - 1);
+    }
+    var dt = date - birthday;
+    date.setDate(Math.round(dt / 24 / 60 / 60 / 1000));
+    return date;
+  }
 
   function getMark() {
     for (var i = 0; i < 5; i++) {
