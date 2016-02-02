@@ -5,6 +5,7 @@
   var formContainer = document.querySelector('.overlay-container');
   var formOpenButton = document.querySelector('.reviews-controls-new');
   var formCloseButton = document.querySelector('.review-form-close');
+  var formAddComment = document.querySelector('.review-submit');
   var form = document.querySelector('.overlay');
 
   var marks = form['review-mark'];
@@ -21,15 +22,19 @@
     evt.preventDefault();
     formContainer.classList.remove('invisible');
     marks[docCookies.getItem('mark') - 1].setAttribute('checked', true);
+    name.value = docCookies.getItem('name');
     checkFormFields();
   };
 
   formCloseButton.onclick = function(evt) {
     evt.preventDefault();
+    formContainer.classList.add('invisible');
+  };
+
+  formAddComment.onclick = function() {
     var dateToExpire = getCookieDate();
     docCookies.setItem('name', name.value, dateToExpire);
     docCookies.setItem('mark', getMark(), dateToExpire);
-    formContainer.classList.add('invisible');
   };
 
   function getMark() {
