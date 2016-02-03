@@ -1,9 +1,11 @@
 'use strict';
+/*  global docCookies: true  */
 
 (function() {
   var formContainer = document.querySelector('.overlay-container');
   var formOpenButton = document.querySelector('.reviews-controls-new');
   var formCloseButton = document.querySelector('.review-form-close');
+  var formAddComment = document.querySelector('.review-submit');
   var form = document.querySelector('.overlay');
 
   var marks = form['review-mark'];
@@ -19,12 +21,20 @@
   formOpenButton.onclick = function(evt) {
     evt.preventDefault();
     formContainer.classList.remove('invisible');
+    marks[docCookies.getItem('mark') - 1].setAttribute('checked', true);
+    name.value = docCookies.getItem('name');
     checkFormFields();
   };
 
   formCloseButton.onclick = function(evt) {
     evt.preventDefault();
     formContainer.classList.add('invisible');
+  };
+
+  formAddComment.onclick = function() {
+    var dateToExpire = getCookieDate();
+    docCookies.setItem('name', name.value, dateToExpire);
+    docCookies.setItem('mark', getMark(), dateToExpire);
   };
 
   function getMark() {
@@ -36,6 +46,18 @@
   }
 
 
+  function getCookieDate() {
+    var date = new Date();
+    var birthday = new Date(date.getFullYear(), 10, 12);
+    if (date < birthday) {
+      birthday.setFullYear(date.getFullYear() - 1);
+    }
+    var dt = date - birthday;
+    date.setDate(Math.round(dt / 24 / 60 / 60 / 1000));
+    return date;
+  }
+
+
   function checkFormFields() {
     if (name.value === '') {
       nameLabel.classList.remove('invisible');
@@ -44,12 +66,14 @@
     }
 
     textLabel.classList.add('invisible');
+
     var mark = getMark();
     if (mark < 3) {
       if (textLabel.control.value === '') {
         textLabel.classList.remove('invisible');
       }
     }
+
 
     if (textLabel.classList.contains('invisible') && nameLabel.classList.contains('invisible')) {
       labelsContainer.classList.add('invisible');
