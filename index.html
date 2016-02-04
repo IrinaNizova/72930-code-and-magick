@@ -119,8 +119,15 @@
   </article>
 </template>
 
+<script>var reviews = [];
+  function __reviewsLoadCallback(data) {
+    reviews = data;
+}
+</script>
+<script src='https://up.htmlacademy.ru/assets/js_intensive/jsonp/reviews.js'></script>
 <script src="libs/cookies.js"></script>
 <script src="js/form.js"></script>
+<script src="js/reviews.js"></script>
 
 </body>
 </html>
