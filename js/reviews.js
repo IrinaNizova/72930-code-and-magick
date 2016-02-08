@@ -9,11 +9,10 @@
   formFilter.classList.add('invisible');
 
   var reviewArticle = document.querySelector('.reviews');
-  var reviews = [];
   var filterReviews = [];
-  var json_path = 'http://o0.github.io/assets/json/reviews.json'
+  var jsonPath = 'http://o0.github.io/assets/json/reviews.json';
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', json_path);
+  xhr.open('GET', jsonPath);
   xhr.timeout = 5000;
 
   function renderReviews(reviewsList) {
@@ -51,26 +50,26 @@
 
   xhr.onload = function(evt) {
     var rawData = evt.target.response;
-    reviews = JSON.parse(rawData);
+    var reviews = JSON.parse(rawData);
     reviewArticle.classList.remove('.review-list-loading');
     renderReviews(reviews);
     var fieldset = document.querySelector('.reviews-filter');
-    for (var i=0; i<5; i++) {
+    for (var i = 0; i < 5; i++) {
       if (fieldset[i].checked === true) {
         setActiveFilter(fieldset[i].id);
       }
     }
   };
 
-  xhr.onerror = function(evt) {
-    reviews.classList.add('.reviews-load-failure');
-  };
-
-  xhr.ontimeout = function(evt) {
+  xhr.onerror = function() {
     reviewArticle.classList.add('.reviews-load-failure');
   };
 
-  xhr.onloadstart = function(evt) {
+  xhr.ontimeout = function() {
+    reviewArticle.classList.add('.reviews-load-failure');
+  };
+
+  xhr.onloadstart = function() {
     reviewArticle.classList.add('.review-list-loading');
   };
 
@@ -80,7 +79,6 @@
 
   function setActiveFilter(id) {
 
-    var selectedElement = document.querySelector('.hotel-filter-selected');
     document.querySelector('#' + id).checked = true;
     filterReviews = reviews.slice(0);
     switch (id) {
