@@ -10,7 +10,7 @@
 
   var reviewArticle = document.querySelector('.reviews');
   var filterReviews = [];
-  var jsonPath = 'http://o0.github.io/assets/json/reviews.json';
+  var jsonPath = '//o0.github.io/assets/json/reviews.json';
   var xhr = new XMLHttpRequest();
   xhr.open('GET', jsonPath);
   xhr.timeout = 5000;
