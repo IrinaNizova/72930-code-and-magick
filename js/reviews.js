@@ -2,7 +2,6 @@
  * Created by ira on 02.02.16.
  */
 'use strict';
-/* global reviews */
 
 (function() {
   var formFilter = document.querySelector('.reviews-filter');
