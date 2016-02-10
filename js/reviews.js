@@ -8,6 +8,7 @@
   formFilter.classList.add('invisible');
 
   var reviewArticle = document.querySelector('.reviews');
+  var reviews = [];
   var filterReviews = [];
   var jsonPath = '//o0.github.io/assets/json/reviews.json';
   var xhr = new XMLHttpRequest();
@@ -49,7 +50,7 @@
 
   xhr.onload = function(evt) {
     var rawData = evt.target.response;
-    var reviews = JSON.parse(rawData);
+    reviews = JSON.parse(rawData);
     reviewArticle.classList.remove('.review-list-loading');
     renderReviews(reviews);
     var fieldset = document.querySelector('.reviews-filter');
