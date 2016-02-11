@@ -18,11 +18,11 @@
   xhr.open('GET', jsonPath);
   xhr.timeout = 5000;
 
-  function renderReviews(reviewsList, page_number, is_rewrite) {
+  function renderReviews(reviewsList, pageNumber, isRewrite) {
     var template = document.querySelector('#review-template');
     var list = document.querySelector('.reviews-list');
     var fragment = document.createDocumentFragment();
-    var from = PAGE_SIZE * page_number;
+    var from = PAGE_SIZE * pageNumber;
     var to = from + PAGE_SIZE;
     var moreReviewsButton = document.querySelector('.reviews-controls-more');
     if (to < reviewsList.length) {
@@ -32,7 +32,7 @@
     }
     var pageReviews = reviewsList.slice(from, to);
 
-    if (is_rewrite === true) {
+    if (isRewrite === true) {
       list.innerHTML = '';
     }
 
