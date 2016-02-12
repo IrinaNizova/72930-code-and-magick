@@ -9,7 +9,7 @@
 
   var currentPage = 0;
   var PAGE_SIZE = 3;
-  var jsonPath = 'http://o0.github.io/assets/json/reviews.json';
+  var jsonPath = '//o0.github.io/assets/json/reviews.json';
 
   var reviewArticle = document.querySelector('.reviews');
   var filterReviews = [];
@@ -71,7 +71,6 @@
     var rawData = evt.target.response;
     reviews = JSON.parse(rawData);
     reviewArticle.classList.remove('.review-list-loading');
-    //renderReviews(reviews, 0, false);
     var fieldset = document.querySelector('.reviews-filter');
     for (var i = 0; i < 5; i++) {
       if (fieldset[i].checked === true) {
