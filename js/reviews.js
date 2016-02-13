@@ -7,21 +7,40 @@
   var formFilter = document.querySelector('.reviews-filter');
   formFilter.classList.add('invisible');
 
-  var reviewArticle = document.querySelector('.reviews');
-  var reviews = [];
-  var filterReviews = [];
+  var currentPage = 0;
+  var PAGE_SIZE = 3;
   var jsonPath = '//o0.github.io/assets/json/reviews.json';
+
+  var reviewArticle = document.querySelector('.reviews');
+  var filterReviews = [];
+  var reviews = [];
   var xhr = new XMLHttpRequest();
   xhr.open('GET', jsonPath);
   xhr.timeout = 5000;
 
-  function renderReviews(reviewsList) {
+  function renderReviews(reviewsList, pageNumber, isRewrite) {
     var template = document.querySelector('#review-template');
     var list = document.querySelector('.reviews-list');
     var fragment = document.createDocumentFragment();
-    list.innerHTML = '';
+    var from = PAGE_SIZE * pageNumber;
+    var to = from + PAGE_SIZE;
+    var moreReviewsButton = document.querySelector('.reviews-controls-more');
+    if (to < reviewsList.length) {
+      moreReviewsButton.classList.remove('invisible');
+    } else {
+      moreReviewsButton.classList.add('invisible');
+    }
+    var pageReviews = reviewsList.slice(from, to);
 
-    reviewsList.forEach(function(item) {
+    if (isRewrite === true) {
+      list.innerHTML = '';
+    }
+
+    moreReviewsButton.onclick = function() {
+      renderReviews(reviewsList, ++currentPage, false);
+    };
+
+    pageReviews.forEach(function(item) {
       var element = template.content.children[0].cloneNode(true);
       element.querySelector('.review-text').textContent = item['description'];
 
@@ -52,7 +71,6 @@
     var rawData = evt.target.response;
     reviews = JSON.parse(rawData);
     reviewArticle.classList.remove('.review-list-loading');
-    renderReviews(reviews);
     var fieldset = document.querySelector('.reviews-filter');
     for (var i = 0; i < 5; i++) {
       if (fieldset[i].checked === true) {
@@ -80,6 +98,7 @@
   function setActiveFilter(id) {
 
     document.querySelector('#' + id).checked = true;
+    currentPage = 0;
     filterReviews = reviews.slice(0);
     switch (id) {
       case 'reviews-recent':
@@ -107,6 +126,6 @@
         });
         break;
     }
-    renderReviews(filterReviews);
+    renderReviews(filterReviews, 0, true);
   }
 })();
