@@ -238,6 +238,24 @@
     return state;
   };
 
+
+  var clouds = document.querySelector('.header-clouds');
+  var demoGame = document.querySelector('.demo');
+  var scrollTimeout;
+  window.addEventListener('scroll', function() {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(function() {
+      var cloudsPosition = clouds.getBoundingClientRect();
+      if (cloudsPosition.bottom > 0) {
+        clouds.style.left = (cloudsPosition.bottom - 360) / 2 + 'px';
+      }
+      if (demoGame.getBoundingClientRect().bottom < 0) {
+        game.setGameStatus(window.Game.Verdict.PAUSE);
+      }
+    }, 100);
+
+  });
+
   /**
    * Конструктор объекта Game. Создает canvas, добавляет обработчики событий
    * и показывает приветственный экран.
