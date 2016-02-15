@@ -264,7 +264,7 @@
   window.addEventListener('scroll', function() {
     console.log(throttle(visibleClouds));
     var cloudsPosition = clouds.getBoundingClientRect();
-    if (visibleClouds() == false) {
+    if (throttle(visibleClouds) == false) {
       clouds.style.left = (cloudsPosition.bottom - 360) / 2 + 'px';
     }
 
