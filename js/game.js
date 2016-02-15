@@ -242,17 +242,35 @@
   var clouds = document.querySelector('.header-clouds');
   var demoGame = document.querySelector('.demo');
   var scrollTimeout;
-  window.addEventListener('scroll', function() {
-    clearTimeout(scrollTimeout);
-    scrollTimeout = setTimeout(function() {
-      var cloudsPosition = clouds.getBoundingClientRect();
-      if (cloudsPosition.bottom > 0) {
-        clouds.style.left = (cloudsPosition.bottom - 360) / 2 + 'px';
-      }
-      if (demoGame.getBoundingClientRect().bottom < 0) {
-        game.setGameStatus(window.Game.Verdict.PAUSE);
-      }
+
+  function throttle(func) {
+    console.log('throttle');
+    clearTimeout(func._tId);
+    func._tId = setTimeout(function() {
+      func();
     }, 100);
+  }
+
+  function visibleClouds() {
+    var cloudsPosition = clouds.getBoundingClientRect();
+    console.log(cloudsPosition.bottom);
+    if (cloudsPosition.bottom > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  window.addEventListener('scroll', function() {
+    console.log(throttle(visibleClouds));
+    var cloudsPosition = clouds.getBoundingClientRect();
+    if (visibleClouds() == false) {
+      clouds.style.left = (cloudsPosition.bottom - 360) / 2 + 'px';
+    }
+
+      //if (demoGame.getBoundingClientRect().bottom < 0) {
+      //  game.setGameStatus(window.Game.Verdict.PAUSE);
+      //}
 
   });
 
