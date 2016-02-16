@@ -246,13 +246,12 @@
   var prevWindowScrollY = 0;
   var direction;
   var areCloudsVisible = clouds.getBoundingClientRect().bottom > 0;
-  var isGameVisible = demoGame.getBoundingClientRect().bottom > 0;
 
   clouds.style.backgroundPositionX = bgPosX;
 
   window.addEventListener('scroll', function() {
     if (areCloudsVisible) {
-      bgPosX = parseInt(clouds.style.backgroundPositionX);
+      bgPosX = parseInt(clouds.style.backgroundPositionX, 10);
       direction = prevWindowScrollY > window.scrollY ? -1 : 1;
       clouds.style.backgroundPositionX = bgPosX + window.scrollY * direction / 30 + '%';
       prevWindowScrollY = window.scrollY;
