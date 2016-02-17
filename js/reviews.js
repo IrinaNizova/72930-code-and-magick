@@ -24,6 +24,7 @@
     var fragment = document.createDocumentFragment();
     var from = PAGE_SIZE * pageNumber;
     var to = from + PAGE_SIZE;
+
     var moreReviewsButton = document.querySelector('.reviews-controls-more');
     if (to < reviewsList.length) {
       moreReviewsButton.classList.remove('invisible');
@@ -41,14 +42,16 @@
     };
 
     pageReviews.forEach(function(item) {
-      var element = template.content.children[0].cloneNode(true);
+      var element = 'content' in template ?
+      template.content.children[0].cloneNode(true) :
+      template.children[0].cloneNode(true);
       element.querySelector('.review-text').textContent = item['description'];
-
+      var rating = element.querySelector('.review-rating');
+      var starClassName = [undefined, 'review-rating', 'review-rating-two', 'review-rating-three', 'review-rating-four', 'review-rating-five'];
+      rating.classList.add(starClassName[item['rating']]);
       var img = new Image(124, 124);
       img.src = item['author']['picture'];
       img.onload = function() {
-        var rating = element.querySelector('.review-rating');
-        element.removeChild(rating);
         element.querySelector('.review-author').style.backgroundImage = 'url(\'' + img.src + '\')';
       };
       img.onerror = function() {

@@ -238,6 +238,36 @@
     return state;
   };
 
+
+  var clouds = document.querySelector('.header-clouds');
+  var demoGame = document.querySelector('.demo');
+  var scrollTimeout;
+  var bgPosX = getComputedStyle(clouds).backgroundPositionX;
+  var prevWindowScrollY = 0;
+  var direction;
+  var areCloudsVisible = clouds.getBoundingClientRect().bottom > 0;
+
+  clouds.style.backgroundPositionX = bgPosX;
+
+  window.addEventListener('scroll', function() {
+    if (areCloudsVisible) {
+      bgPosX = parseInt(clouds.style.backgroundPositionX, 10);
+      direction = prevWindowScrollY > window.scrollY ? -1 : 1;
+      clouds.style.backgroundPositionX = bgPosX + window.scrollY * direction / 30 + '%';
+      prevWindowScrollY = window.scrollY;
+    }
+
+
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(function() {
+      areCloudsVisible = clouds.getBoundingClientRect().bottom > 0;
+      if (demoGame.getBoundingClientRect().bottom < 0) {
+        game.setGameStatus(window.Game.Verdict.PAUSE);
+      }
+    }, 100);
+
+  });
+
   /**
    * Конструктор объекта Game. Создает canvas, добавляет обработчики событий
    * и показывает приветственный экран.
