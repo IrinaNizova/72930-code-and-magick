@@ -2,6 +2,7 @@
  * Created by ira on 02.02.16.
  */
 'use strict';
+/* global Review: true */
 
 (function() {
   var formFilter = document.querySelector('.reviews-filter');
@@ -14,12 +15,12 @@
   var reviewArticle = document.querySelector('.reviews');
   var filterReviews = [];
   var reviews = [];
+  var renderedElements = [];
   var xhr = new XMLHttpRequest();
   xhr.open('GET', jsonPath);
   xhr.timeout = 5000;
 
   function renderReviews(reviewsList, pageNumber, isRewrite) {
-    var template = document.querySelector('#review-template');
     var list = document.querySelector('.reviews-list');
     var fragment = document.createDocumentFragment();
     var from = PAGE_SIZE * pageNumber;
@@ -41,24 +42,12 @@
       renderReviews(reviewsList, ++currentPage, false);
     };
 
-    pageReviews.forEach(function(item) {
-      var element = 'content' in template ?
-      template.content.children[0].cloneNode(true) :
-      template.children[0].cloneNode(true);
-      element.querySelector('.review-text').textContent = item['description'];
-      var rating = element.querySelector('.review-rating');
-      var starClassName = [undefined, 'review-rating', 'review-rating-two', 'review-rating-three', 'review-rating-four', 'review-rating-five'];
-      rating.classList.add(starClassName[item['rating']]);
-      var img = new Image(124, 124);
-      img.src = item['author']['picture'];
-      img.onload = function() {
-        element.querySelector('.review-author').style.backgroundImage = 'url(\'' + img.src + '\')';
-      };
-      img.onerror = function() {
-        reviewArticle.classList.add('.review-load-failure');
-      };
-      fragment.appendChild(element);
-    });
+    renderedElements = renderedElements.concat(pageReviews.map(function(item) {
+      var reviewElement = new Review(item);
+      reviewElement.render();
+      fragment.appendChild(reviewElement.element);
+      return reviewElement;
+    }));
     list.appendChild(fragment);
   }
 
