@@ -9,7 +9,7 @@
 
   var currentPage = 0;
   var PAGE_SIZE = 3;
-  var jsonPath = '//o0.github.io/assets/json/reviews.json';
+  var jsonPath = 'http://o0.github.io/assets/json/reviews.json';
 
   var reviewArticle = document.querySelector('.reviews');
   var filterReviews = [];
@@ -47,8 +47,8 @@
       template.children[0].cloneNode(true);
       element.querySelector('.review-text').textContent = item['description'];
       var rating = element.querySelector('.review-rating');
-      var ratingWidth = parseInt(window.getComputedStyle(rating).width, 10);
-      rating.setAttribute('style', 'width:' + ratingWidth * item['rating'] + 'px;');
+      var starClassName = [undefined, 'review-rating', 'review-rating-two', 'review-rating-three', 'review-rating-four', 'review-rating-five'];
+      rating.classList.add(starClassName[item['rating']]);
       var img = new Image(124, 124);
       img.src = item['author']['picture'];
       img.onload = function() {
