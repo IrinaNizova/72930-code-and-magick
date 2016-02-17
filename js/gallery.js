@@ -17,8 +17,8 @@
   Gallery.prototype.show = function() {
     document.querySelector('.overlay-gallery').classList.remove('invisible');
     this._closeButton.addEventListener('click', this._onCloseClick);
-    this.leftControl.addEventListener('click', this);
-    this.rightControl.addEventListener('click', this);
+    this.leftControl.addEventListener('click', this._leftArrow);
+    this.rightControl.addEventListener('click', this._rightArrow);
     window.addEventListener('keydown', this._onDocumentKeyDown);
   };
 
@@ -26,6 +26,14 @@
   Gallery.prototype.hide = function() {
     document.querySelector('.overlay-gallery').classList.add('invisible');
     this._closeButton.removeEventListener('click', this._onCloseClick);
+  };
+
+  Gallery.prototype._leftArrow = function() {
+
+  };
+
+  Gallery.prototype._rightArrow = function() {
+
   };
 
   Gallery.prototype._onCloseClick = function() {
