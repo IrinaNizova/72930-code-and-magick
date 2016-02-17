@@ -10,7 +10,7 @@
 
   var currentPage = 0;
   var PAGE_SIZE = 3;
-  var jsonPath = 'http://o0.github.io/assets/json/reviews.json';
+  var jsonPath = '//o0.github.io/assets/json/reviews.json';
 
   var reviewArticle = document.querySelector('.reviews');
   var filterReviews = [];
@@ -21,7 +21,6 @@
   xhr.timeout = 5000;
 
   function renderReviews(reviewsList, pageNumber, isRewrite) {
-    //var template = document.querySelector('#review-template');
     var list = document.querySelector('.reviews-list');
     var fragment = document.createDocumentFragment();
     var from = PAGE_SIZE * pageNumber;
