@@ -16,10 +16,10 @@
 
   Gallery.prototype.show = function() {
     document.querySelector('.overlay-gallery').classList.remove('invisible');
-    this._closeButton.addEventListener('click', this._onCloseClick);
-    this.leftControl.addEventListener('click', this._leftArrow);
-    this.rightControl.addEventListener('click', this._rightArrow);
-    window.addEventListener('keydown', this._onDocumentKeyDown);
+    this._closeButton.addEventListener('click', this._onClickClose);
+    this.leftControl.addEventListener('click', this._showPreviousPhoto);
+    this.rightControl.addEventListener('click', this._showNextPhoto);
+    window.addEventListener('keydown', this._onEscKeyDown);
   };
 
 
@@ -28,20 +28,20 @@
     this._closeButton.removeEventListener('click', this._onCloseClick);
   };
 
-  Gallery.prototype._leftArrow = function() {
+  Gallery.prototype._showPreviousPhoto = function() {
 
   };
 
-  Gallery.prototype._rightArrow = function() {
+  Gallery.prototype._showNextPhoto = function() {
 
   };
 
-  Gallery.prototype._onCloseClick = function() {
+  Gallery.prototype._onClickClose = function() {
     this.hide();
   };
 
 
-  Gallery.prototype._onDocumentKeyDown = function(event) {
+  Gallery.prototype._onEscKeyDown = function(event) {
     if (event.keyCode === 27) {
       this.hide();
     }
