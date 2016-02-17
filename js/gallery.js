@@ -47,16 +47,5 @@
     }
   };
 
-
-  var leftControl = document.querySelector('.overlay-gallery-control-left');
-  var rightControl = document.querySelector('.overlay-gallery-control-right');
-
-  leftControl.onclick = function() {
-    console.log('left');
-  };
-  rightControl.onclick = function() {
-    console.log('right');
-  };
-
   window.Gallery = Gallery;
 })();
