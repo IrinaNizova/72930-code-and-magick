@@ -5,8 +5,8 @@
 
 (function() {
   window.inherit = function(child, parent) {
-    function emptyCtor() {};
-	emptyCtor.prototype = parent.prototype;
-	child.prototype = new emptyCtor();
-  }
+    function EmptyCtor() {}
+    EmptyCtor.prototype = parent.prototype;
+    child.prototype = new EmptyCtor();
+  };
 })();
