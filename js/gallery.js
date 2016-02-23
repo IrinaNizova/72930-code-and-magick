@@ -10,11 +10,12 @@
     this._closeButton = this.element.querySelector('.overlay-gallery-close');
     this.leftControl = this.element.querySelector('.overlay-gallery-control-left');
     this.rightControl = this.element.querySelector('.overlay-gallery-control-right');
+    this._leftArrow = this._leftArrow.bind(this);
+    this._rightArrow = this._rightArrow.bind(this);
     this._onCloseClick = this._onCloseClick.bind(this);
     this._onDocumentKeyDown = this._onDocumentKeyDown.bind(this);
-    this.currentPhotoNumber = 1;
+    this.currentPhotoNumber = null;
     this.setCurrentPhotoNumber = this.setCurrentPhotoNumber.bind(this);
-    this.getCurrentPhotoNumber = this.getCurrentPhotoNumber.bind(this);
   };
 
   Gallery.prototype.setCurrentPhotoNumber = function(value) {
@@ -46,25 +47,29 @@
   var lastPicture = '';
   Gallery.prototype.setCurrentPicture = function(num) {
     var preview = document.querySelector('.overlay-gallery-preview');
-    var picture = this.arrayPictures[num];
-    if (lastPicture) {
-      preview.removeChild(lastPicture);
+    if (num < this.arrayPictures.length) {
+      var picture = this.arrayPictures[num];
+      if (lastPicture) {
+        preview.removeChild(lastPicture);
+      }
+      preview.appendChild(picture);
+      document.querySelector('.preview-number-current').textContent = num + 1;
+      document.querySelector('.preview-number-total').textContent = this.arrayPictures.length;
+      this.setCurrentPhotoNumber(num);
+      lastPicture = picture;
     }
-    preview.appendChild(picture);
-    document.querySelector('.preview-number-current').textContent = num + 1;
-    document.querySelector('.preview-number-total').textContent = this.arrayPictures.length;
-    this.setCurrentPhotoNumber(num);
-    lastPicture = picture;
   };
 
   Gallery.prototype._leftArrow = function() {
-    if (this.getCurrentPhotoNumber() > 1) {
-      this.setCurrentPicture(this.getCurrentPhotoNumber() - 1);
+    if (this.currentPhotoNumber > 0) {
+      this.setCurrentPicture(this.currentPhotoNumber - 1);
     }
   };
 
   Gallery.prototype._rightArrow = function() {
-    this.setCurrentPicture(this.getCurrentPhotoNumber() + 1);
+    if (this.currentPhotoNumber < 10) {
+      this.setCurrentPicture(this.currentPhotoNumber + 1);
+    }
   };
 
   Gallery.prototype._onCloseClick = function() {
