@@ -38,6 +38,20 @@
     img.onerror = function() {
       reviewArticle.classList.add('.review-load-failure');
     };
+
+    var yesButton = this.element.querySelector('.review-quiz-answer-yes');
+    function add() {
+      this._data['rating'] += 1;
+    }
+    var addRating = add.bind(this);
+    yesButton.onclick = addRating;
+
+    var noButton = this.element.querySelector('.review-quiz-answer-no');
+    function reduce() {
+      this._data['rating'] -= 1;
+    }
+    var reduceRating = reduce.bind(this);
+    noButton.onclick = reduceRating;
   };
   window.Review = Review;
 

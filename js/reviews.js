@@ -3,7 +3,6 @@
  */
 'use strict';
 /* global Review: true */
-/* global Gallery: true */
 
 (function() {
   var formFilter = document.querySelector('.reviews-filter');
@@ -12,7 +11,6 @@
   var currentPage = 0;
   var PAGE_SIZE = 3;
   var jsonPath = '//o0.github.io/assets/json/reviews.json';
-  var gallery = new Gallery();
 
   var reviewArticle = document.querySelector('.reviews');
   var filterReviews = [];
@@ -53,13 +51,7 @@
     list.appendChild(fragment);
   }
 
-  var photogallery = document.querySelector('.photogallery');
-  var images = photogallery.querySelectorAll('img');
-  for (var i = 0; i < images.length; i++) {
-    images[i].addEventListener('click', function() {
-      gallery.show();
-    });
-  }
+
 
   var filters = document.querySelector('.reviews-filter');
   filters.addEventListener('click', function(evt) {
@@ -74,7 +66,7 @@
     reviews = JSON.parse(rawData);
     reviewArticle.classList.remove('.review-list-loading');
     var fieldset = document.querySelector('.reviews-filter');
-    for (i = 0; i < 5; i++) {
+    for (var i = 0; i < 5; i++) {
       if (fieldset[i].checked === true) {
         setActiveFilter(fieldset[i].id);
       }
