@@ -10,7 +10,7 @@
 
   var currentPage = 0;
   var PAGE_SIZE = 3;
-  var jsonPath = '//o0.github.io/assets/json/reviews.json';
+  var jsonPath = 'http://o0.github.io/assets/json/reviews.json';
 
   var reviewArticle = document.querySelector('.reviews');
   var filterReviews = [];
@@ -66,11 +66,8 @@
     reviews = JSON.parse(rawData);
     reviewArticle.classList.remove('.review-list-loading');
     var fieldset = document.querySelector('.reviews-filter');
-    for (var i = 0; i < 5; i++) {
-      if (fieldset[i].checked === true) {
-        setActiveFilter(fieldset[i].id);
-      }
-    }
+    var clickedElement = localStorage['active_element'];
+    setActiveFilter(clickedElement);
   };
 
   xhr.onerror = function() {
@@ -90,8 +87,8 @@
   formFilter.classList.remove('invisible');
 
   function setActiveFilter(id) {
-
     document.querySelector('#' + id).checked = true;
+    localStorage['active_element'] = id;
     currentPage = 0;
     filterReviews = reviews.slice(0);
     switch (id) {
