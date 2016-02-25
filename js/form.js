@@ -21,8 +21,10 @@ define(function() {
   formOpenButton.onclick = function(evt) {
     evt.preventDefault();
     formContainer.classList.remove('invisible');
-    marks[docCookies.getItem('mark') - 1].setAttribute('checked', true);
-    name.value = docCookies.getItem('name');
+    if (docCookies.getItem('mark') !== null) {
+      marks[docCookies.getItem('mark') - 1].setAttribute('checked', true);
+      name.value = docCookies.getItem('name');
+    }
     checkFormFields();
   };
 

@@ -4,8 +4,7 @@
 'use strict';
 
 define([
-  'review.js'],
- function(Review) {
+  'review.js'], function(Review) {
   var formFilter = document.querySelector('.reviews-filter');
   formFilter.classList.add('invisible');
 
