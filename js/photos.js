@@ -2,9 +2,11 @@
  * Created by ira on 20.02.16.
  */
 'use strict';
-/* global Gallery, Photo: true */
 
-(function() {
+
+define(['gallery',
+        'photo'],
+function(Gallery, Photo) {
   var photos = document.querySelectorAll('.photogallery-image');
   var photosArray = Array.prototype.slice.call(photos).map(function(item) {
     var src = item.querySelector('img').src;
@@ -22,4 +24,4 @@
       };
     }(i));
   }
-})();
+});
