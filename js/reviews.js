@@ -65,7 +65,6 @@ define([
     var rawData = evt.target.response;
     reviews = JSON.parse(rawData);
     reviewArticle.classList.remove('.review-list-loading');
-    var fieldset = document.querySelector('.reviews-filter');
     var activeFilter = localStorage.getItem('activeFilter') || 'reviews-all';
     setActiveFilter(activeFilter);
   };
@@ -89,7 +88,7 @@ define([
   function setActiveFilter(id) {
 
     document.querySelector('#' + id).checked = true;
-    localStorage.setItem('activeFilter', id)
+    localStorage.setItem('activeFilter', id);
     currentPage = 0;
     filterReviews = reviews.slice(0);
     switch (id) {
