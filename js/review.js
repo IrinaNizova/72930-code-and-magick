@@ -5,7 +5,7 @@
 
 'use strict';
 
-(function() {
+define(function() {
     /**
      * @constructor
      */
@@ -53,6 +53,6 @@
     var reduceRating = reduce.bind(this);
     noButton.onclick = reduceRating;
   };
-  window.Review = Review;
+  return Review;
 
-})();
+});

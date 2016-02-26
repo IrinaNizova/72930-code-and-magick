@@ -4,7 +4,7 @@
 
 'use strict';
 
-(function() {
+define(function() {
   var Gallery = function() {
     this.element = document.querySelector('.overlay-gallery');
     this._closeButton = this.element.querySelector('.overlay-gallery-close');
@@ -95,5 +95,5 @@
     }
   };
 
-  window.Gallery = Gallery;
-})();
+  return Gallery;
+});

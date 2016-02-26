@@ -1,7 +1,7 @@
 'use strict';
 /*  global docCookies: true  */
 
-(function() {
+define(function() {
   var formContainer = document.querySelector('.overlay-container');
   var formOpenButton = document.querySelector('.reviews-controls-new');
   var formCloseButton = document.querySelector('.review-form-close');
@@ -21,8 +21,10 @@
   formOpenButton.onclick = function(evt) {
     evt.preventDefault();
     formContainer.classList.remove('invisible');
-    marks[docCookies.getItem('mark') - 1].setAttribute('checked', true);
-    name.value = docCookies.getItem('name');
+    if (docCookies.getItem('mark') !== null) {
+      marks[docCookies.getItem('mark') - 1].setAttribute('checked', true);
+      name.value = docCookies.getItem('name');
+    }
     checkFormFields();
   };
 
@@ -97,4 +99,4 @@
   text.onchange = function() {
     checkFormFields();
   };
-})();
+});

@@ -2,9 +2,9 @@
  * Created by ira on 02.02.16.
  */
 'use strict';
-/* global Review: true */
 
-(function() {
+define([
+  'review.js'], function(Review) {
   var formFilter = document.querySelector('.reviews-filter');
   formFilter.classList.add('invisible');
 
@@ -120,4 +120,4 @@
     }
     renderReviews(filterReviews, 0, true);
   }
-})();
+});
