@@ -3,7 +3,7 @@
  */
 'use strict';
 
-(function() {
+define(function() {
   var Photo = function(src) {
     var picture = new Image();
     picture.height = 300;
@@ -11,5 +11,5 @@
     return picture;
   };
 
-  window.Photo = Photo;
-})();
+  return Photo;
+});
