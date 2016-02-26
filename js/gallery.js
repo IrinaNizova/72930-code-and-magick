@@ -38,6 +38,7 @@
   Gallery.prototype.hide = function() {
     document.querySelector('.overlay-gallery').classList.add('invisible');
     this._closeButton.removeEventListener('click', this._onCloseClick);
+    window.location.hash = ''
   };
 
   Gallery.prototype.setPictures = function(arrayPictures) {
@@ -46,6 +47,10 @@
 
   var lastPicture = '';
   Gallery.prototype.setCurrentPicture = function(num) {
+  if (typeof num === 'string') {
+    window.location.hash = num;
+    console.log('stroka');
+  } else {
     var preview = document.querySelector('.overlay-gallery-preview');
     if (num < this.arrayPictures.length) {
       var picture = this.arrayPictures[num];
@@ -57,6 +62,7 @@
       document.querySelector('.preview-number-total').textContent = this.arrayPictures.length;
       this.setCurrentPhotoNumber(num);
       lastPicture = picture;
+      }
     }
   };
 

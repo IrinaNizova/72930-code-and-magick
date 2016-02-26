@@ -17,9 +17,11 @@
   for (var i = 0; i < images.length; i++) {
     images[i].addEventListener('click', function(i) {
       return function() {
+        window.location.hash = 'photo/img/screenshots/' + i + '.png'
         gallery.show();
-        gallery.setCurrentPicture(i);
+        gallery.setCurrentPicture(images[i].id);
       };
     }(i));
   }
+  window.addEventListener('hashchange', this._onHashChange.bind(this));
 })();
