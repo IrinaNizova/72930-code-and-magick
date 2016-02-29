@@ -110,7 +110,6 @@ define([
    * @param {string} id
    */
   function setActiveFilter(id) {
-
     document.querySelector('#' + id).checked = true;
     localStorage.setItem('activeFilter', id);
     currentPage = 0;
