@@ -17,7 +17,10 @@ define(function() {
   var nameLabel = document.querySelector('.review-fields-name');
   var textLabel = document.querySelector('.review-fields-text');
 
-
+   /**
+   * Обработчик события клика по кнопке, открывающей форму отзыва
+   * @param {ClickEvent} evt
+   */
   formOpenButton.onclick = function(evt) {
     evt.preventDefault();
     formContainer.classList.remove('invisible');
@@ -28,17 +31,29 @@ define(function() {
     checkFormFields();
   };
 
+  /**
+   * Обработчик события клика по кнопке, закрывающей форму отзыва
+   * @param {ClickEvent} evt
+   */
   formCloseButton.onclick = function(evt) {
     evt.preventDefault();
     formContainer.classList.add('invisible');
   };
 
+  /**
+   * Обработчик события клика по кнопке добавления отзыва
+   * @param {ClickEvent} evt
+   */
   formAddComment.onclick = function() {
     var dateToExpire = getCookieDate();
     docCookies.setItem('name', name.value, dateToExpire);
     docCookies.setItem('mark', getMark(), dateToExpire);
   };
 
+  /**
+   * Смотрим какая оценка на форме выделена и возващаем её значение.
+   * @return {numeric}
+   */
   function getMark() {
     for (var i = 0; i < 5; i++) {
       if (marks[i].checked === true) {
@@ -47,7 +62,10 @@ define(function() {
     }
   }
 
-
+   /**
+   * Возвращаем дату до дня рождения, нужную для куки
+   * @return {numeric}
+   */
   function getCookieDate() {
     var date = new Date();
     var birthday = new Date(date.getFullYear(), 10, 12);
@@ -59,7 +77,9 @@ define(function() {
     return date;
   }
 
-
+  /**
+   * Проверяем все ли обязательные поля формы заполнены
+   */
   function checkFormFields() {
     if (name.value === '') {
       nameLabel.classList.remove('invisible');
@@ -92,10 +112,12 @@ define(function() {
     };
   }
 
+  // Событие изменения текста в поле Имя
   name.onchange = function() {
     checkFormFields();
   };
 
+  // Событие изменения текста в поле Текст
   text.onchange = function() {
     checkFormFields();
   };

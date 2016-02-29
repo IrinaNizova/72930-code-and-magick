@@ -4,6 +4,12 @@
 'use strict';
 
 define(function() {
+  /**
+  * @constructor
+  * Конструктор объекта Photo.
+  * Создаёт и возвращает картинку с переданным адресом.
+  * @param {JSON} data
+  */
   var Photo = function(src) {
     var picture = new Image();
     picture.height = 300;
