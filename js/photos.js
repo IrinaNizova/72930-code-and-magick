@@ -16,15 +16,27 @@ function(Gallery, Photo) {
   var gallery = new Gallery();
   // В галерею помещается массив картинок
   gallery.setPictures(photosArray);
+  if (window.location.hash.match(/#img\/screenshots\/(\S+)/)) {
+    gallery.show();
+    gallery.setCurrentPicture(window.location.hash);
+  }
   var photogallery = document.querySelector('.photogallery');
   var images = photogallery.querySelectorAll('img');
-  // При нажатии на картинку открывается галерея
-  for (var i = 0; i < images.length; i++) {
-    images[i].addEventListener('click', function() {
-      return function() {
-        gallery.show();
-        gallery.setCurrentPicture(i);
-      };
-    }(i));
-  }
+  // При изменении хэша изменится картинка галереи
+  window.addEventListener('hashchange', function(event) {
+    if (window.location.hash.match(/#img\/screenshots\/(\S+)/)) {
+     gallery.show();
+     gallery.setCurrentPicture(window.location.hash);
+     }
+    else if (window.location.hash === '') {
+     gallery.hide();
+    }
+  });
+
+  [].forEach.call(images, function(item, index, array) {
+    item.addEventListener('click', function(evt) {
+      evt.preventDefault();
+      gallery.setHash(index);
+    });
+  });
 });

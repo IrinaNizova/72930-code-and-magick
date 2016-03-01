@@ -22,8 +22,8 @@ define(function() {
     this.setCurrentPhotoNumber = this.setCurrentPhotoNumber.bind(this);
   };
 
-  Gallery.prototype.setCurrentPhotoNumber = function(value) {
-    this.currentPhotoNumber = value;
+  Gallery.prototype.setCurrentPhotoNumber = function() {
+    this.currentPhotoNumber = parseInt(window.location.hash.split('/')[2])-1;;
   };
 
   Gallery.prototype.getCurrentPhotoNumber = function() {
@@ -48,6 +48,8 @@ define(function() {
   Gallery.prototype.hide = function() {
     document.querySelector('.overlay-gallery').classList.add('invisible');
     this._closeButton.removeEventListener('click', this._onCloseClick);
+    window.removeEventListener('keydown', this._onDocumentKeyDown);
+    window.location.hash = '';
   };
 
   /**
@@ -59,31 +61,45 @@ define(function() {
   };
 
   /**
+  * Устанавливает хэш к адресу страницы
+  * @param {string} hash
+  */
+  Gallery.prototype.setHash = function(hash) {
+    window.location.hash = 'img/screenshots/'+(hash+1)+'.png';
+  };
+
+  /**
   * Устанавливает в галерею картинку с переданным номером
-  * @param {numeric} num
+  * @param {number} num
   */
   var lastPicture = '';
   Gallery.prototype.setCurrentPicture = function(num) {
     var preview = document.querySelector('.overlay-gallery-preview');
-    if (num < this.arrayPictures.length) {
-      var picture = this.arrayPictures[num];
-      if (lastPicture) {
-        preview.removeChild(lastPicture);
-      }
-      preview.appendChild(picture);
-      document.querySelector('.preview-number-current').textContent = num + 1;
-      document.querySelector('.preview-number-total').textContent = this.arrayPictures.length;
-      this.setCurrentPhotoNumber(num);
-      lastPicture = picture;
+    if (lastPicture) {
+      preview.removeChild(lastPicture);
     }
+    if (typeof num === 'string') {
+      var picture = new Image();
+      picture.height = 300;
+      picture.src = window.location.hash.replace('#', '');
+      preview.appendChild(picture);
+      this.setCurrentPhotoNumber();
+      document.querySelector('.preview-number-current').textContent = this.getCurrentPhotoNumber() + 1;
+    } else {
+      if (num < this.arrayPictures.length) {
+        var picture = this.arrayPictures[num];
+        this.setCurrentPhotoNumber(num);
+      }
+    }
+    lastPicture = picture;
   };
 
   /**
   * Переключатель левой стрелки
   */
   Gallery.prototype._leftArrow = function() {
-    if (this.currentPhotoNumber > 0) {
-      this.setCurrentPicture(this.currentPhotoNumber - 1);
+    if (this.getCurrentPhotoNumber() > 0) {
+      this.setHash(this.getCurrentPhotoNumber()-1);
     }
   };
 
@@ -91,8 +107,8 @@ define(function() {
   * Переключатель правой стрелки
   */
   Gallery.prototype._rightArrow = function() {
-    if (this.currentPhotoNumber < 10) {
-      this.setCurrentPicture(this.currentPhotoNumber + 1);
+    if (this.currentPhotoNumber < 9) {
+      this.setHash(this.currentPhotoNumber + 1);
     }
   };
 
