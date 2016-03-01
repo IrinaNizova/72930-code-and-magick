@@ -6,9 +6,11 @@
 'use strict';
 
 define(function() {
-    /**
-     * @constructor
-     */
+  /**
+  * @constructor
+  * Конструктор объекта Review.
+  * @param {JSON} data
+  */
   var Review = function(data) {
     this._data = data;
   };
@@ -20,6 +22,9 @@ define(function() {
   var starClassName = ['', 'review-rating', 'review-rating-two',
 		'review-rating-three', 'review-rating-four', 'review-rating-five'];
 
+  /**
+  * Функция отрисовывает один из отзывов
+  */
   Review.prototype.render = function() {
     this.element = 'content' in template ?
       template.content.children[0].cloneNode(true) :

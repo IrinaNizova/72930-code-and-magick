@@ -9,7 +9,13 @@ define([
   formFilter.classList.add('invisible');
 
   var currentPage = 0;
+  /**
+   * Количество отзывов на странице
+   * @const
+   * @type {number}
+   */
   var PAGE_SIZE = 3;
+  // Путь по которому расположена информация об отзывах
   var jsonPath = '//o0.github.io/assets/json/reviews.json';
 
   var reviewArticle = document.querySelector('.reviews');
@@ -20,6 +26,12 @@ define([
   xhr.open('GET', jsonPath);
   xhr.timeout = 5000;
 
+  /**
+   * Отрисовка страницы с комментариями
+   * @param {Object} reviewsList
+   * @param {numeric} pageNumber
+   * @param {boolean} isRewrite
+   */
   function renderReviews(reviewsList, pageNumber, isRewrite) {
     var list = document.querySelector('.reviews-list');
     var fragment = document.createDocumentFragment();
@@ -52,7 +64,10 @@ define([
   }
 
 
-
+  /**
+  * Обработчик клика по фильтру
+  * @param {ClickEvent} evt
+  */
   var filters = document.querySelector('.reviews-filter');
   filters.addEventListener('click', function(evt) {
     var clickedElement = evt.target;
@@ -61,6 +76,7 @@ define([
     }
   });
 
+  // Загрузка прошла удачно
   xhr.onload = function(evt) {
     var rawData = evt.target.response;
     reviews = JSON.parse(rawData);
@@ -69,14 +85,17 @@ define([
     setActiveFilter(activeFilter);
   };
 
+  // При загрузке произошла ошибка
   xhr.onerror = function() {
     reviewArticle.classList.add('.reviews-load-failure');
   };
 
+  // Загрузка не закончилась до тайм-аута
   xhr.ontimeout = function() {
     reviewArticle.classList.add('.reviews-load-failure');
   };
 
+  // Пока длится загрузка
   xhr.onloadstart = function() {
     reviewArticle.classList.add('.review-list-loading');
   };
@@ -85,8 +104,12 @@ define([
 
   formFilter.classList.remove('invisible');
 
-  function setActiveFilter(id) {
 
+   /**
+   * Присваивается активный фильтр
+   * @param {string} id
+   */
+  function setActiveFilter(id) {
     document.querySelector('#' + id).checked = true;
     localStorage.setItem('activeFilter', id);
     currentPage = 0;
