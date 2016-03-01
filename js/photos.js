@@ -23,17 +23,18 @@ function(Gallery, Photo) {
   var photogallery = document.querySelector('.photogallery');
   var images = photogallery.querySelectorAll('img');
   // При изменении хэша изменится картинка галереи
-  window.addEventListener('hashchange', function(event) {
+  window.addEventListener('hashchange', function() {
     if (window.location.hash.match(/#img\/screenshots\/(\S+)/)) {
-     gallery.show();
-     gallery.setCurrentPicture(window.location.hash);
-     }
-    else if (window.location.hash === '') {
-     gallery.hide();
+      gallery.show();
+      gallery.setCurrentPicture(window.location.hash);
+    } else {
+      if (window.location.hash === '') {
+        gallery.hide();
+      }
     }
   });
 
-  [].forEach.call(images, function(item, index, array) {
+  [].forEach.call(images, function(item, index) {
     item.addEventListener('click', function(evt) {
       evt.preventDefault();
       gallery.setHash(index);

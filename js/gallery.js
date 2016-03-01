@@ -23,7 +23,7 @@ define(function() {
   };
 
   Gallery.prototype.setCurrentPhotoNumber = function() {
-    this.currentPhotoNumber = parseInt(window.location.hash.split('/')[2])-1;;
+    this.currentPhotoNumber = parseInt(window.location.hash.split('/')[2], 10) - 1;
   };
 
   Gallery.prototype.getCurrentPhotoNumber = function() {
@@ -65,7 +65,7 @@ define(function() {
   * @param {string} hash
   */
   Gallery.prototype.setHash = function(hash) {
-    window.location.hash = 'img/screenshots/'+(hash+1)+'.png';
+    window.location.hash = 'img/screenshots/' + (hash + 1) + '.png';
   };
 
   /**
@@ -87,7 +87,7 @@ define(function() {
       document.querySelector('.preview-number-current').textContent = this.getCurrentPhotoNumber() + 1;
     } else {
       if (num < this.arrayPictures.length) {
-        var picture = this.arrayPictures[num];
+        picture = this.arrayPictures[num];
         this.setCurrentPhotoNumber(num);
       }
     }
@@ -99,7 +99,7 @@ define(function() {
   */
   Gallery.prototype._leftArrow = function() {
     if (this.getCurrentPhotoNumber() > 0) {
-      this.setHash(this.getCurrentPhotoNumber()-1);
+      this.setHash(this.getCurrentPhotoNumber() - 1);
     }
   };
 
